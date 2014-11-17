@@ -18,7 +18,6 @@ task libJavadocs(type: Javadoc) {
 test {
   include 'src/test/**'
   systemProperties = System.properties
-  jvmArgs "-javaagent:${configurations.codeCoverage.asPath}=destfile=${project.buildDir.path}/coverage-results/jacoco.exec,sessionid=HSServ,append=false",
   '-Djacoco=true',
   '-Xms128m',
   '-Xmx512m',
