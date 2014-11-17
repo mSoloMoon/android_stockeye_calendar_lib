@@ -9,45 +9,54 @@ repositories {
 }
 dependencies {
 	testCompile 'junit:junit:4.11'
+  codeCoverage 'org.jacoco:org.jacoco.agent:0.5.10.201208310627:runtime@jar'
+  codeCoverageAnt 'org.jacoco:org.jacoco.ant:0.5.10.201208310627'
 }
 
 task libJavadocs(type: Javadoc) {
 	source = sourceSets.main.allJava
 }
 
-jacoco {  
-    toolVersion = "0.7.3.201410310304"
+configurations {
+  codeCoverage
+  codeCoverageAnt
 }
 
-def coverageSourceDirs = [  
-        'src/main/java',
-]
+test {
+  systemProperties = System.properties
+  jvmArgs "-javaagent:${configurations.codeCoverage.asPath}=destfile=${project.buildDir.path}/coverage-results/jacoco.exec,sessionid=HSServ,append=false",
+  '-Djacoco=true',
+  '-Xms128m',
+  '-Xmx512m',
+  '-XX:MaxPermSize=128m'
+}
 
-task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {  
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports after running tests."
-    reports {
-        xml.enabled = true // coveralls plugin depends on xml format report
-        html.enabled = true
-    }
-    classDirectories = fileTree(
-            dir: './build/intermediates/classes/debug'
-            )
-    sourceDirectories = files(coverageSourceDirs)
-    executionData = files('build/jacoco/testDebug.exec')
-    // Bit hacky but fixes https://code.google.com/p/android/issues/detail?id=69174.
-    // We iterate through the compiled .class tree and rename $$ to $. 
-    doFirst {
-        new File('myapp/build/intermediates/classes/').eachFileRecurse { file ->
-            if (file.name.contains('$$')) {
-                file.renameTo(file.path.replace('$$', '$'))
-            }
+task generateCoverageReport << {
+  ant {
+    taskdef(name:'jacocoreport', classname: 'org.jacoco.ant.ReportTask', classpath: configurations.codeCoverageAnt.asPath)
+
+    mkdir dir: "build/reports/coverage"
+
+    jacocoreport {
+      executiondata {
+        fileset(dir: "build/coverage-results") {
+          include name: 'jacoco.exec'
         }
+      }
+      structure(name: project.name) {
+        classfiles {
+          fileset(dir: "build/classes/main") {
+            exclude name: 'org/ifxforum/**/*'
+            exclude name: 'org/gca/euronet/generated**/*'
+          }
+        }
+        sourcefiles(encoding: 'CP1252') {
+          fileset dir: "src/main/java"
+        }
+      }
+
+      xml destfile: "build/reports/coverage/jacoco.xml"
+      html destdir: "build/reports/coverage"
     }
-    afterEvaluate {
-        // just clean up coveralls dashboard, following reports are not of interest
-        testDebug.reports.junitXml.enabled = false
-    }
+  }
 }
-
-
