@@ -38,9 +38,9 @@ public class UtilCalTimeTest {
 	@Test
 	public void testGetStrCal() {
 		  String strCal = utilCalTime.getStrCal(new GregorianCalendar(2014, 10, 8));
-		  String strCalTest = "20141108";
-		  assertNotEquals("should be equal", strCal, strCalTest);
-		  assertTrue( "should be equal", strCal.equals(strCalTest) );
+		  String strCalTest = "2014-11-08";
+		  assertNotEquals("objects should be not equal", strCal, strCalTest);
+		  assertTrue( "values should be equal", strCal.equals(strCalTest) ); 
 	}
 
 }
