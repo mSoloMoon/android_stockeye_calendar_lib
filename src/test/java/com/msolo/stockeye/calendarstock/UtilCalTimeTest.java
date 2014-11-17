@@ -14,12 +14,12 @@ public class UtilCalTimeTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		  UtilCalTime = UtilCalTime.getInstance();
+		  utilCalTime = UtilCalTime.getInstance();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		  UtilCalTime = null;
+		  utilCalTime = null;
 	}
 
 	@Test
