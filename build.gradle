@@ -1,5 +1,6 @@
 apply plugin: 'java'
 //apply from: 'cobertura.gradle'
+apply plugin: "jacoco"
 
 version = 0.1
 
@@ -13,3 +14,40 @@ dependencies {
 task libJavadocs(type: Javadoc) {
 	source = sourceSets.main.allJava
 }
+
+jacoco {  
+    toolVersion = "0.7.3.201410310304"
+}
+
+def coverageSourceDirs = [  
+        'src/main/java',
+]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {  
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+    }
+    classDirectories = fileTree(
+            dir: './build/intermediates/classes/debug'
+            )
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files('build/jacoco/testDebug.exec')
+    // Bit hacky but fixes https://code.google.com/p/android/issues/detail?id=69174.
+    // We iterate through the compiled .class tree and rename $$ to $. 
+    doFirst {
+        new File('myapp/build/intermediates/classes/').eachFileRecurse { file ->
+            if (file.name.contains('$$')) {
+                file.renameTo(file.path.replace('$$', '$'))
+            }
+        }
+    }
+    afterEvaluate {
+        // just clean up coveralls dashboard, following reports are not of interest
+        testDebug.reports.junitXml.enabled = false
+    }
+}
+
+
