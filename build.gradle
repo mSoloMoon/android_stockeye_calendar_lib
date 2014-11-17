@@ -16,6 +16,9 @@ task libJavadocs(type: Javadoc) {
 }
 
 task jacocoreport {
-  xml destfile: "build/reports/coverage/jacoco.xml"
-  html destdir: "build/reports/coverage"
+  reports {
+      xml.enabled false
+      csv.enabled false
+      html.destination "${buildDir}/jacocoHtml"
+  }
 }
