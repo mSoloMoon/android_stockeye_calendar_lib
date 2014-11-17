@@ -9,20 +9,14 @@ repositories {
 }
 dependencies {
 	testCompile 'junit:junit:4.11'
-  codeCoverage 'org.jacoco:org.jacoco.agent:0.5.10.201208310627:runtime@jar'
-  codeCoverageAnt 'org.jacoco:org.jacoco.ant:0.5.10.201208310627'
 }
 
 task libJavadocs(type: Javadoc) {
 	source = sourceSets.main.allJava
 }
 
-configurations {
-  codeCoverage
-  codeCoverageAnt
-}
-
 test {
+  include 'src/test/**'
   systemProperties = System.properties
   jvmArgs "-javaagent:${configurations.codeCoverage.asPath}=destfile=${project.buildDir.path}/coverage-results/jacoco.exec,sessionid=HSServ,append=false",
   '-Djacoco=true',
