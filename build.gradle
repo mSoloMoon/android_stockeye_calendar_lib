@@ -16,10 +16,7 @@ task libJavadocs(type: Javadoc) {
 }
 
 test {
-  jvmArgs
-  '-Xms128m',
-  '-Xmx512m',
-  '-XX:MaxPermSize=128m'
+  jvmArgs '-Xms128m', '-Xmx512G', '-XX:MaxPermSize=128m'
 }
 
 task generateCoverageReport << {
