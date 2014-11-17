@@ -3,8 +3,6 @@ apply from: 'cobertura.gradle'
 
 version = 0.1
 
-buildDir = 'output'
-
 repositories {
 	mavenCentral()
 }
