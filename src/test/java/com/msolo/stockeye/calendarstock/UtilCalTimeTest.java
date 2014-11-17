@@ -13,34 +13,35 @@ public class UtilCalTimeTest {
 	private UtilCalTime utilCalTime;
 	
 	@Before
-		public void setUp() throws Exception {
-				utilCalTime = UtilCalTime.getInstance();
-			}
+	public void setUp() throws Exception {
+			utilCalTime = UtilCalTime.getInstance();
+	}
 
 	@After
-		public void tearDown() throws Exception {
-				utilCalTime = null;
-			}
+	public void tearDown() throws Exception {
+			utilCalTime = null;
+	}
 
 	@Test
-		public void testAssertClassSingleton() {
-			  UtilCalTime utilCalTimeAnother = UtilCalTime.getInstance();
-			  assertSame("should be same", utilCalTime, utilCalTimeAnother);
-			}
+	public void testAssertClassSingleton() {
+		  UtilCalTime utilCalTimeAnother = UtilCalTime.getInstance();
+		  assertSame("should be same", utilCalTime, utilCalTimeAnother);
+	}
 
 	@Test
-		public void testGetIntCal() {
-			  int intCal = utilCalTime.getIntCal(new GregorianCalendar(2014, 10, 8));
-			  int intCalTest = 20141108;
-			  assertEquals("should be equal", intCal, intCalTest);
-			}
+	public void testGetIntCal() {
+		  int intCal = utilCalTime.getIntCal(new GregorianCalendar(2014, 10, 8));
+		  int intCalTest = 20141108;
+		  assertEquals("should be equal", intCal, intCalTest);
+	}
 	
 	@Test
-		public void testGetStrCal() {
-			  String strCal = utilCalTime.getStrCal(new GregorianCalendar(2014, 10, 8));
-			  String strCalTest = "20141108";
-			  assertEquals("should be equal", strCal, strCalTest);
-			}
-	
+	public void testGetStrCal() {
+		  String strCal = utilCalTime.getStrCal(new GregorianCalendar(2014, 10, 8));
+		  String strCalTest = "20141108";
+		  assertNotEquals("should be equal", strCal, strCalTest);
+		  assertTrue( "should be equal", strCal.equals(strCalTest) );
+	}
+
 }
 
