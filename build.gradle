@@ -15,10 +15,6 @@ task libJavadocs(type: Javadoc) {
 	source = sourceSets.main.allJava
 }
 
-test {
-      include 'src/test/**'
-}
-
 jacocoTestReport {
     group = "reporting"
     description = "Generate Jacoco coverage reports after running tests."
