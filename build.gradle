@@ -1,16 +1,24 @@
 apply plugin: 'java'
 version = 0.1
 sourceCompatibility = 1.6
+group = 'com.msolo.stockeye.calendarstock'
+archivesBaseName = 'calendarlib'
 sourceSets {
     main {
       java {
-         srcDirs = ['src']    
+        srcDirs = ['src']    
       }
     }
    test {
       java {
-         srcDirs = ['test']    
+        srcDirs = ['test']    
       }
    }
 }
 buildDir = 'lib'
+repositories {
+	mavenCentral()
+}
+dependencies {
+	testCompile 'junit:junit:4.12'
+}
