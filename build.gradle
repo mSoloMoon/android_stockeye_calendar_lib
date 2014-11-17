@@ -16,7 +16,7 @@ task libJavadocs(type: Javadoc) {
 }
 
 test {
-      include 'src/java-test/**'
+      include 'src/test/**'
 }
 
 jacocoTestReport {
