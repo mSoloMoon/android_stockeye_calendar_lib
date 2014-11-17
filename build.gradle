@@ -16,9 +16,7 @@ task libJavadocs(type: Javadoc) {
 }
 
 test {
-  include 'src/test/**'
-  systemProperties = System.properties
-  '-Djacoco=true',
+  jvmArgs
   '-Xms128m',
   '-Xmx512m',
   '-XX:MaxPermSize=128m'
