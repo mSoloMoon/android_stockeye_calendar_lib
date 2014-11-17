@@ -15,10 +15,6 @@ task libJavadocs(type: Javadoc) {
 	source = sourceSets.main.allJava
 }
 
-test {
-  jvmArgs '-Xms128m', '-Xmx512G', '-XX:MaxPermSize=128m'
-}
-
 task generateCoverageReport << {
   ant {
     taskdef(name:'jacocoreport', classname: 'org.jacoco.ant.ReportTask', classpath: configurations.codeCoverageAnt.asPath)
