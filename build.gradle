@@ -15,32 +15,24 @@ task libJavadocs(type: Javadoc) {
 	source = sourceSets.main.allJava
 }
 
-task generateCoverageReport << {
-  ant {
-    taskdef(name:'jacocoreport', classname: 'org.jacoco.ant.ReportTask', classpath: configurations.codeCoverageAnt.asPath)
-
-    mkdir dir: "build/reports/coverage"
-
-    jacocoreport {
-      executiondata {
-        fileset(dir: "build/coverage-results") {
-          include name: 'jacoco.exec'
-        }
-      }
-      structure(name: project.name) {
-        classfiles {
-          fileset(dir: "build/classes/main") {
-            exclude name: 'org/ifxforum/**/*'
-            exclude name: 'org/gca/euronet/generated**/*'
-          }
-        }
-        sourcefiles(encoding: 'CP1252') {
-          fileset dir: "src/main/java"
-        }
-      }
-
-      xml destfile: "build/reports/coverage/jacoco.xml"
-      html destdir: "build/reports/coverage"
+task jacocoreport {
+  executiondata {
+    fileset(dir: "build/coverage-results") {
+      include name: 'jacoco.exec'
     }
   }
+  structure(name: project.name) {
+    classfiles {
+      fileset(dir: "build/classes/main") {
+        exclude name: 'org/ifxforum/**/*'
+        exclude name: 'org/gca/euronet/generated**/*'
+      }
+    }
+    sourcefiles(encoding: 'CP1252') {
+      fileset dir: "src/main/java"
+    }
+  }
+
+  xml destfile: "build/reports/coverage/jacoco.xml"
+  html destdir: "build/reports/coverage"
 }
