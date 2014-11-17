@@ -16,23 +16,6 @@ task libJavadocs(type: Javadoc) {
 }
 
 task jacocoreport {
-  executiondata {
-    fileset(dir: "build/coverage-results") {
-      include name: 'jacoco.exec'
-    }
-  }
-  structure(name: project.name) {
-    classfiles {
-      fileset(dir: "build/classes/main") {
-        exclude name: 'org/ifxforum/**/*'
-        exclude name: 'org/gca/euronet/generated**/*'
-      }
-    }
-    sourcefiles(encoding: 'CP1252') {
-      fileset dir: "src/main/java"
-    }
-  }
-
   xml destfile: "build/reports/coverage/jacoco.xml"
   html destdir: "build/reports/coverage"
 }
