@@ -17,8 +17,7 @@ public class UtilCalTime {
 	 */
 	public static UtilCalTime getInstance() {
 			return INSTANCE;
-		}
-	
+	}
 	
 	/**
 	 * 
@@ -32,7 +31,7 @@ public class UtilCalTime {
 	 */
 	public int getIntCal(GregorianCalendar cal) {		
 			return Integer.parseInt( getStrCal(cal).replace("-", "") );
-		}
+	}
 
 	/**
 	 * 
@@ -46,7 +45,7 @@ public class UtilCalTime {
 	 */
 	public String getStrCal(GregorianCalendar cal) {		
 			return String.format("%tF", cal);
-		}
+	}
 	
 }
 

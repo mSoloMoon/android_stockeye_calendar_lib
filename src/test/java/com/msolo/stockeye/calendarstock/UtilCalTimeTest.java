@@ -14,12 +14,12 @@ public class UtilCalTimeTest {
 	
 	@Before
 	public void setUp() throws Exception {
-			utilCalTime = UtilCalTime.getInstance();
+		  UtilCalTime = UtilCalTime.getInstance();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-			utilCalTime = null;
+		  UtilCalTime = null;
 	}
 
 	@Test
@@ -39,7 +39,7 @@ public class UtilCalTimeTest {
 	public void testGetStrCal() {
 		  String strCal = utilCalTime.getStrCal(new GregorianCalendar(2014, 10, 8));
 		  String strCalTest = "2014-11-08";
-		  assertNotEquals("objects should be not equal", strCal, strCalTest);
+		  assertEquals("objects should be equal", strCal, strCalTest);
 		  assertTrue( "values should be equal", strCal.equals(strCalTest) ); 
 	}
 
